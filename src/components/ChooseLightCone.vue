@@ -1,5 +1,5 @@
 <script setup>
-import { EQUIPMENT_PROPERTIES } from '../constants/equipment'
+import { DAMAGE_PROPERTIES } from '../constants/equipment'
 
 const props = defineProps(['lightCone', 'visible'])
 const emits = defineEmits(['close', 'click-choose-light-cone'])
@@ -19,8 +19,8 @@ const clickChooseLightCone = (item) => {
       <img class="icon" :src="item.icon">
       <div class="name">{{ item.name }}</div>
       <div v-for="(e, i) in Object.keys(item.effects)" class="property" :key="i">
-        {{ EQUIPMENT_PROPERTIES[e].name }}
-        {{ EQUIPMENT_PROPERTIES[e].isPercent ? `${(item.effects[e] * 100).toFixed(1)}%` : item.effects[e] }}
+        {{ DAMAGE_PROPERTIES[e].name }}
+        {{ DAMAGE_PROPERTIES[e].isPercent ? `${(item.effects[e] * 100).toFixed(1)}%` : item.effects[e] }}
       </div>
     </div>
   </div>

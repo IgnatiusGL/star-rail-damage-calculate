@@ -1,4 +1,4 @@
-export const EQUIPMENT_PROPERTIES = {
+export const DAMAGE_PROPERTIES = {
   baseAttack: { name: '攻击力', isPercent: false },
   attackPercentUp: { name: '攻击力提升', isPercent: true },
   damageUp: { name: '伤害增加', isPercent: true },
@@ -75,3 +75,26 @@ export const EQUIPMENT = [
     }
   },
 ]
+
+export const EQUIPMENT_PROPERTIES = {
+  head: {},
+  hand: {
+    attackUp: 352,
+  },
+  body: {
+    criticalChanceUp: 32.4,
+    criticalDamageUp: 64.8,
+    attackPercentUp: 43.2,
+  },
+  foot: {
+    speedUp: 25,
+    attackPercentUp: 43.2,
+  },
+  ball: {
+    attackPercentUp: 43.2,
+    lightUp: 38.8
+  },
+  rope: {
+    attackPercentUp: 43.2,
+  },
+}

@@ -1,5 +1,5 @@
 <script setup>
-import { EQUIPMENT_PROPERTIES } from '../constants/equipment'
+import { DAMAGE_PROPERTIES } from '../constants/equipment'
 
 const props = defineProps(['equips', 'visible'])
 const emits = defineEmits(['close', 'click-choose-equip'])
@@ -27,8 +27,8 @@ const clickChooseEquip = (item) => {
       </div>
       <div class="name">{{ item.name }}</div>
       <div v-for="(e, i) in Object.keys(item.effects)" class="property" :key="i">
-        {{ EQUIPMENT_PROPERTIES[e].name }}
-        {{ EQUIPMENT_PROPERTIES[e].isPercent ? `${(item.effects[e] * 100).toFixed(1)}%` : item.effects[e] }}
+        {{ DAMAGE_PROPERTIES[e].name }}
+        {{ DAMAGE_PROPERTIES[e].isPercent ? `${(item.effects[e] * 100).toFixed(1)}%` : item.effects[e] }}
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@ const clickChooseEquip = (item) => {
   height: 100vh;
   padding: 10%;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 11;
 
   .equip {
     width: 350px;

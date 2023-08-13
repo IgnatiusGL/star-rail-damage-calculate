@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import {
   ChooseEquips,
   ChooseLightCone,
+  EditEquipProperties,
 } from '../components'
 import { EQUIPMENT } from '../constants/equipment'
 import { LIGHT_CONE } from '../constants/lightCone'
@@ -139,10 +140,24 @@ const clickCalcDamage = () => {
   calcData.damageUp = totalDamageUp
   calcData.defenseReduction = totalDefenseReduction
 }
+
+// 编辑装备词条
+const editEquipPropertiesVisible = ref(false)
+const editIndex = ref(0)
+const clickEditEquipProperties = (type, index) => {
+  if (equip[type].icon) {
+    editIndex.value = index
+    editEquipPropertiesVisible.value = true
+  }
+}
+const clickConfirm = (type, effects) => {
+  Object.keys(effects).forEach(e => equip[type].effects[e] = (equip[type].effects[e] || 0) + effects[e])
+  console.log(equip)
+}
 </script>
 
 <template>
-  <div class="home-root" :style="`background-image: url(${characterData.bg})`">
+  <div class="home-root" :style="`background-image: url(${characterData.bg})`" @click.stop="editEquipPropertiesVisible = false">
     <div class="title">{{ characterData.name }}数据计算</div>
     <div class="equips-title">遗器</div>
     <!-- 选遗器 -->
@@ -158,8 +173,15 @@ const clickCalcDamage = () => {
     </div>
     <!-- 遗器 -->
     <div class="equips">
-      <div class="equip" v-for="item in Object.keys(equip)">
+      <div class="equip" v-for="(item, index) in Object.keys(equip)" @click.stop="clickEditEquipProperties(item, index)" :key="index">
         <img v-if="equip[item].icon" :src="equip[item].icon">
+        <edit-equip-properties
+          :visible="editEquipPropertiesVisible && index === editIndex"
+          :properties="[]"
+          :type="item"
+          @close="editEquipPropertiesVisible = false"
+          @click-confirm="clickConfirm"
+        ></edit-equip-properties>
       </div>
     </div>
     <div class="bottom-area">
@@ -250,17 +272,19 @@ const clickCalcDamage = () => {
     width: 100%;
     padding: 0 100px;
     margin-top: 20px;
-    cursor: pointer;
 
     .equip {
+      position: relative;
       flex-shrink: 0;
       width: 128px;
       height: 128px;
       border: 2px solid #fff;
       border-radius: 8px;
       box-shadow: 1px 1px 2px black;
+      cursor: pointer;
 
       img {
+        border-radius: 8px;
         width: 100%;
         height: 100%;
         padding: 20px;
